@@ -12,7 +12,7 @@
     "dev:tailwind": "npx tailwindcss build src/public/styles.css -o dist/public/styles.css --watch",
     "dev:server": "nodemon dist/server.js",
     "dev:html": "nodemon --watch src/public --ext html --exec \"npm run build-html\"",
-    "build-html": "cp -r src/public/*.html dist/public/ && cp -r src/public/content dist/public/content",
+    "build-html": "cp -r src/public/*.html dist/public/ && cp -r src/public/content dist/public/content && mkdir -p dist/public/images && cp -v -r src/public/images/* dist/public/images",
     "dev": "concurrently \"npm run dev:build\" \"npm run dev:tailwind\" \"npm run dev:server\" \"npm run dev:html\"",
     "migrate": "node-pg-migrate up -f migration-config.js",
     "migrate:down": "node-pg-migrate down -f migration-config.js",

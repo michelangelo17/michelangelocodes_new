@@ -16,8 +16,6 @@ app.use((_req, res, next) => {
   next()
 })
 
-// Example of a known inline style hash
-
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -30,6 +28,7 @@ app.use(
         (_req, res) => `'nonce-${(res as express.Response).locals.nonce}'`,
       ],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+      imgSrc: ["'self'", 'data:'], // Allow images from self and data URIs
       scriptSrc: [
         "'self'",
         'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js',
@@ -60,6 +59,11 @@ app.post('/csp-violation-report-endpoint', (req, res) => {
   console.log('CSP Violation: ', req.body)
   res.status(204).end()
 })
+
+// app.use((req, res, next) => {
+//   console.log(`Request for ${req.url}`)
+//   next()
+// })
 
 app.use(
   express.static(path.join(__dirname, 'public'), {
