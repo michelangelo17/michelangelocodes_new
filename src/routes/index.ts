@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import { viewRouter } from './views'
-import { apiRouter } from './api'
+// import { apiRouter } from './api'
 
 const router = Router()
 
 router.use('/', viewRouter)
-router.use('/api', apiRouter)
+// router.use('/api', apiRouter)
 
 export default router
