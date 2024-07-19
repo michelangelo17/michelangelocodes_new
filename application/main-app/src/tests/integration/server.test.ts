@@ -15,7 +15,7 @@ describe('Server', () => {
 
     // Fetch CSRF token and cookies
     const response = await request(app).get('/')
-    console.log('Response Headers:', response.headers) // Log response headers for debugging
+    console.log('Response Headers:', JSON.stringify(response.headers)) // Log response headers for debugging
 
     const setCookieHeader = response.headers['set-cookie']
     cookies = Array.isArray(setCookieHeader)
