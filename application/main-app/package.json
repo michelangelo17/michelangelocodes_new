@@ -2,11 +2,11 @@
   "name": "michelangelocodes_new",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && npx tailwindcss build src/public/styles.css -o dist/public/styles.css && tsc && npm run build-html",
-    "start": "node start.js",
+    "start": "node dist/server.js",
     "seed": "npx ts-node src/db/seed.ts",
     "dev:build": "tsc -w",
     "dev:tailwind": "npx tailwindcss build src/public/styles.css -o dist/public/styles.css --watch",
