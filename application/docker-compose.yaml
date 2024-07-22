@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  main-app:
+    build: ./main-app
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    depends_on:
+      - strapi
+      - postgres
+
+  strapi:
+    build: ./strapi
+    ports:
+      - '1337:1337'
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+  postgres:
+    build: ./postgres
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
