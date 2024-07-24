@@ -1,5 +1,3 @@
-// src/server.ts
-
 import express, { Application, Request, Response } from 'express'
 import path from 'path'
 import dotenv from 'dotenv'
@@ -43,42 +41,10 @@ const createApp = (): Application => {
 
   // Security headers
   app.use(
-    helmet.contentSecurityPolicy({
-      directives: {
-        defaultSrc: ["'self'"],
-        styleSrc: [
-          "'self'",
-          'https://cdn.jsdelivr.net',
-          'https://fonts.googleapis.com',
-          'https://cdnjs.cloudflare.com',
-          (_req, res) => `'nonce-${(res as express.Response).locals.nonce}'`,
-        ],
-        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-        imgSrc: ["'self'", 'data:'],
-        scriptSrc: [
-          "'self'",
-          'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js',
-          'https://unpkg.com/htmx.org@1.6.1/dist/htmx.min.js',
-          (_req, res) => `'nonce-${(res as express.Response).locals.nonce}'`,
-        ],
-        scriptSrcElem: [
-          "'self'",
-          'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js',
-          'https://unpkg.com/htmx.org@1.6.1/dist/htmx.min.js',
-          (_req, res) => `'nonce-${(res as express.Response).locals.nonce}'`,
-        ],
-        styleSrcElem: [
-          "'self'",
-          'https://cdn.jsdelivr.net',
-          'https://fonts.googleapis.com',
-          'https://cdnjs.cloudflare.com',
-          (_req, res) => `'nonce-${(res as express.Response).locals.nonce}'`,
-        ],
-        reportUri: '/csp-violation-report-endpoint',
-      },
+    helmet({
+      contentSecurityPolicy: false, // Disable CSP
     }),
   )
-
   app.use(express.json({ type: ['json', 'application/csp-report'] }))
 
   // CSRF protection middleware with secure cookies
@@ -102,12 +68,6 @@ const createApp = (): Application => {
     res.locals.csrfToken = req.csrfToken()
     res.setHeader('CSRF-Token', res.locals.csrfToken)
     next()
-  })
-
-  // CSP Violation Report Endpoint
-  app.post('/csp-violation-report-endpoint', (req: Request, res: Response) => {
-    logger.info('CSP Violation: ', { body: req.body })
-    res.status(204).end()
   })
 
   // Serve static files

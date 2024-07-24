@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import { aboutApiRouter } from './about'
+import { blogApiRouter } from './blog'
 
 const router = Router()
 
-router.use('/about', aboutApiRouter)
+router.use('/blog', blogApiRouter)
 
 export const apiContentRouter = router

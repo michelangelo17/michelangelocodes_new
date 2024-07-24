@@ -8,24 +8,43 @@ services:
     env_file:
       - .env
     depends_on:
-      - strapi
-      - postgres
+      - ghost
+      - db
+    command: npm start
 
-  strapi:
-    build: ./strapi
+  ghost:
+    image: ghost:5-alpine
+    container_name: ghost
+    restart: always
     ports:
-      - '1337:1337'
-    env_file:
-      - .env
-    depends_on:
-      - postgres
-
-  postgres:
-    build: ./postgres
+      - '2368:2368'
     env_file:
       - .env
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./ghost/content:/var/lib/ghost/content
+    environment:
+      url: ${GHOST_URL}
+      database__client: mysql
+      database__connection__host: ${GHOST_DB_HOST}
+      database__connection__user: ${GHOST_DB_USER}
+      database__connection__password: ${GHOST_DB_PASSWORD}
+      database__connection__database: ${GHOST_DB_NAME}
+      database__connection__port: ${GHOST_DB_PORT}
+
+  db:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ${GHOST_DB_NAME}
+      MYSQL_USER: ${GHOST_DB_USER}
+      MYSQL_PASSWORD: ${GHOST_DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
 
 volumes:
-  postgres_data:
+  db_data:
+  ghost_content:

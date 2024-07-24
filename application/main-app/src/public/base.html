@@ -18,24 +18,21 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css"
     />
     <link rel="icon" href="/images/logo.ico" type="image/x-icon" />
-    <script
-      nonce="PLACEHOLDER"
-      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"
-    ></script>
-    <script nonce="PLACEHOLDER" hx-trigger="load">
+    <script nonce="PLACEHOLDER" src="/js/highlight.min.js"></script>
+    <!-- <script nonce="PLACEHOLDER" hx-trigger="load">
       document.addEventListener('DOMContentLoaded', function () {
         hljs.highlightAll()
       })
-    </script>
-    <script
-      nonce="PLACEHOLDER"
-      src="https://unpkg.com/htmx.org@1.6.1/dist/htmx.min.js"
-    ></script>
+    </script> -->
+    <script nonce="PLACEHOLDER" src="/js/htmx.min.js"></script>
     <script nonce="PLACEHOLDER">
       htmx.config.includeIndicatorStyles = false
     </script>
   </head>
-  <body class="bg-gray-100 p-6">
+  <body
+    class="bg-gray-100 p-6"
+    hx-headers='{"X-CSRF-Token": "{{ csrfToken }}"}'
+  >
     <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
       <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-10 p-4">
         <div class="max-w-3xl mx-auto">
