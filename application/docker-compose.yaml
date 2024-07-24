@@ -1,17 +1,6 @@
 version: '3.8'
 
 services:
-  main-app:
-    build: ./main-app
-    ports:
-      - '3000:3000'
-    env_file:
-      - .env
-    depends_on:
-      - ghost
-      - db
-    command: npm start
-
   ghost:
     image: ghost:5-alpine
     container_name: ghost
@@ -38,7 +27,7 @@ services:
     env_file:
       - .env
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${GHOST_DB_NAME}
       MYSQL_USER: ${GHOST_DB_USER}
       MYSQL_PASSWORD: ${GHOST_DB_PASSWORD}
