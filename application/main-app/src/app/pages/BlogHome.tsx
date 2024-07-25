@@ -18,20 +18,29 @@ const BlogHome = () => {
     id: string
     title: string
     excerpt: string
+    html: string // Assuming the post content is available in the 'html' field
   }
 
-  const filteredPosts = posts.filter((post: Post) =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()),
+  const filteredPosts = posts.filter(
+    (post: Post) =>
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.html.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   return (
-    <Box>
-      <Heading>Blog Home</Heading>
+    <Box p={4}>
+      <Heading mb={6}>Blog Home</Heading>
       <Input
         placeholder='Search posts'
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        mb={4}
+        mb={8}
+        bg='gray.600'
+        fontFamily='inherit'
+        color='gray.200'
+        border='1px solid'
+        borderColor='gray.600'
+        _focus={{ borderColor: 'gray.800' }}
       />
       <Grid templateColumns='repeat(auto-fill, minmax(300px, 1fr))' gap={6}>
         {filteredPosts.map((post: Post) => (
@@ -42,10 +51,18 @@ const BlogHome = () => {
             p={4}
             borderWidth='1px'
             borderRadius='md'
-            _hover={{ bg: 'rgba(255, 255, 255, 0.1)' }}
+            boxShadow='sm'
+            _hover={{
+              bg: 'rgba(255, 255, 255, 0.1)',
+              boxShadow: 'md',
+              transform: 'translateY(-2px)',
+            }}
+            transition='all 0.2s ease-in-out'
             textDecoration='none'
           >
-            <Heading size='md'>{post.title}</Heading>
+            <Heading size='md' color='blue.400' mb={2}>
+              {post.title}
+            </Heading>
             <Text>{post.excerpt}</Text>
           </GridItem>
         ))}
