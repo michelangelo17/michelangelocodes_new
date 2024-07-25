@@ -1,8 +1,0 @@
-version: '3.8'
-
-services:
-  main-app:
-    volumes:
-      - ./main-app:/usr/src/app
-      - /usr/src/app/node_modules
-    command: sh -c "NODE_ENV=development npm run dev"
